@@ -31,7 +31,7 @@ async function getCurrentWeather(location){
 
 async function geocordinate(location){
     try{
-        const res=await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=2275fe7cb85bec6c223cb33918659ad5`,{mode:"cors"})
+        const res=await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=2275fe7cb85bec6c223cb33918659ad5`,{mode:"cors"})
         const geoData=await res.json()
           weeklyForcast(geoData[0].lat,geoData[0].lon)
     }catch(err){
