@@ -5,6 +5,7 @@
 --primar-color:#fff;
 --unique-font:  'Russo One', sans-serif;
 }
+
 *{
     padding: 0;
     margin: 0;
@@ -14,13 +15,23 @@
 
 .container{
     max-width: 1200px;
-    padding: 20px;
+     width: 90%;
     margin: 0 auto;
 }
 
 img{
     max-width: 100%;
 }
+
+.flex{
+  display: flex;
+  align-items: center;
+  
+}
+
+
+
+
 body{
  line-height: 1;
  font-family: 'Roboto', sans-serif;
@@ -30,46 +41,45 @@ body{
   background-attachment: fixed;
   color: var(--primar-color);
   overflow-x: hidden;
+  height: 100vh;
 }
 
 
 /* main */
 
 .weather-info{
-  position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap:15px;
-   margin-top: 40px;
-    
+    justify-content: flex-start;
+     margin: 90px 0px 0px 0px;
+   
    }
 
+   .weather-info >*+*{
+      margin-top: 20px;
+   }
    /* weather animation */
+ 
    .animateCurrent{
-        animation-name:fromleft;
-        animation-duration: 2s;
+    animation: from-left 400ms ease-in;
    }
    
-    @keyframes fromleft{
-          0%{
-            left: -1000px;
-          }
-
-          100%{
-            left: 0px;
-          }
-    }
-   
-
-    .flex-desc{
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    
+   @keyframes from-left{
+      0%{
+        opacity: 0;
+          transform: translateX(-100%);
+      }
+      100%{
+        opacity: 1;
+        transform: translateX(0%);
+      }
    }
-
-
+   
+     
+   .flex-desc >*+*{
+    margin-left: 1rem;
+   }
+   
    .head-info h2{
     font-size: 28px;
    }
@@ -79,13 +89,11 @@ body{
 
  /*   <!-- weather description  */
 
-   .weather-desc{
 
-        display: flex;
-        align-items: center;
-        gap: 23px;
-
+   .weather-desc >*+*{
+    margin-left: 23px;
    }
+
     
   #kelvin{
      font-family: var(--unique-font);
@@ -102,23 +110,21 @@ body{
   #weather-options{
      display: flex;
      flex-direction: column;
-     gap: 15px;
-
   }
 
+  #weather-options > *+*{
+    margin-top: 1rem;
+  }
   /*    <!-- weather input --> */
-  .weather-input{
-    
-    display: flex;
-    align-items: center;
-  }
+
+  
 
   .weather-input input{
- 
+   padding: 0.92rem;
     border: none;
     outline: none;
-     padding: 14px 36px;
-
+    width: 80%;
+    max-width: 290px;
   }
 
   #btn{
@@ -132,47 +138,45 @@ body{
  /* days of the week */
 
  .forcast{
-  position: relative;
-  margin-top: 90px;
-  margin-bottom: 50px;
+  padding:60px 0px; 
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
-  justify-content:center;
-  align-items: center;
-  
-  
+  justify-content: center;
+   align-items: center;
  }
 
 
-.animateWeekly{
-  animation-name: fromdown;
-  animation-duration: 2s;
-}
-@keyframes fromdown{
-      0%{
-        bottom: -1000px;
-      }
-      100%{
-        bottom: 0px;
-      }
-}
+
+
+
 
  .day{
-
-  width:300px;
+  max-width:300px;
+  width: 90%;
   display: flex;
   flex-direction: column;
   background-color: rgba(83, 81, 81, 0.37);
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 20px;
   color: rgb(209, 201, 201);
   font-weight: bold;
-  gap: 10px;
   text-align: left;
   cursor: pointer;
-  transition:all 0.30s ease-out;
- 
+  transition:all 400ms ease-in-out;
+  opacity: 0;
+  transform: translateX(-50%);
+  margin:20px;
+ }
+
+ .day.fade{
+  opacity:1;
+  transform:translateX(0%) ;
+ }
+
+
+
+ .day > *+*{
+  margin-top: 10px;
  }
 
  .day:hover{
@@ -180,54 +184,48 @@ body{
  }
 
  .forcast-desc{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: rgb(209, 201, 201);
  }
 
  .forcast-temp{
-  font-size: 23px;
+  font-size: 1.2rem;
+ }
+
+ #date{
+  font-size: 2rem;
  }
 
  /* mobile view */
 
  @media screen and (max-width: 480px) {
+
+
   .head-info h1 {
     font-size: 40px;
-}
-
-.weather-info{
-  gap: 18px;
-  margin-top: 60px;
-
-}
-
- .weather-desc {
-   gap: 16px;
-  flex-direction: column;
-    align-items:flex-start;
-
   }
 
-.underline{
-  display: none;
-}
+  .underline{
+    display: none;
+  }
+
+  .weather-desc >*+*{
+    margin-left: 0px;
+    margin-top: 1rem;
+   }
+
+ .weather-desc {
+  align-items: flex-start;
+  flex-direction: column;
+  }
+
+
 
   #kelvin{
       font-size: 3rem;
   }
 
 
-  .day{
-    width: 250px;
-  }
-
-
-  .weather-input input {
-   
-    padding: 14px 26px;
 }
 
-.forcast{
-  margin-top: 60px;
-}
-}
+

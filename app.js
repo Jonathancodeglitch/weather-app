@@ -1,15 +1,6 @@
 const weatherInfo=document.querySelector('.weather-info');
-const forcast= document.querySelector('.forcast');
-/* const desc=document.getElementById('desc');
-let icon=document.querySelector('.icon');
-const city=document.getElementById('city');
-const country=document.getElementById('country');
-const kelvin=document.getElementById('kelvin');
-const feels=document.getElementById('feels');
-const wind=document.getElementById('wind');
-const humidity=document.getElementById('humidity');
+let forcast= document.querySelector('.forcast');
 
-; */
 // api.openweathermap.org/data/2.5/forecast?q=benin city&appid=appid=2275fe7cb85bec6c223cb33918659ad5&units=imperial
 //get current weather api
 async function getCurrentWeather(location){
@@ -76,7 +67,7 @@ const DOMSTUFF=(function(){
           let output=`
                     <div class="day">
                     <h1 id="date">${dayname}</h1>
-                    <div class="flex-desc">
+                    <div class="flex-desc flex">
                         <div class="forcast-desc">${data.weather[0].description}</div>
                         <img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png" alt="">
                 </div>
@@ -85,13 +76,15 @@ const DOMSTUFF=(function(){
           
           `
            forcast.innerHTML+=output
+           animation()
+         
    }
       
    const CurrentWeatherElem=(data)=>{
         
         const output=`
         <div class="head-info">
-        <div class="flex-desc">
+        <div class="flex-desc flex">
              <h2 id ="desc">${data.weather[0].description}</h2>
              <img src=http://openweathermap.org/img/w/${data.weather[0].icon}.png class="icon" alt="">
         </div>
@@ -99,7 +92,7 @@ const DOMSTUFF=(function(){
      <h1><span id="city">${data.name}</span>,<span id="country">${data.sys.country}</span></h1>
         </div>   
 <!-- weather description --> 
-  <div class="weather-desc">
+  <div class="weather-desc flex">
         <div id="kelvin">${Math.round(data.main.temp) }<sup>°F</sup></div>  
         <div class="underline"></div>
           <div class="flex-options" >
@@ -114,9 +107,9 @@ const DOMSTUFF=(function(){
         `
         
      weatherContent.innerHTML=output; 
-
-   
+     animation()
    }
+   
    return{
      createTheWeekElem,
      CurrentWeatherElem
@@ -127,13 +120,15 @@ const Locaton=(function(){
       const input=document.getElementById("input");
 
     const searchCurrentLocation=()=>{
-          if(input!==""){
-                anination()
-                getCurrentWeather(input.value)
-                geocordinate(input.value)
-                input.value=""
+          if(input.value===""){
+            alert("input a city")
           }
-       
+         else{
+          animation()
+          getCurrentWeather(input.value)
+          geocordinate(input.value)
+          input.value=""
+         }
     }
     return{
         searchCurrentLocation,
@@ -142,20 +137,51 @@ const Locaton=(function(){
 
 /* add anination */
 
-function anination(){
-    weatherInfo.classList.add("animateCurrent");
-    forcast.classList.add("animateWeekly");
+function animation(){
+      
+    let day=document.querySelectorAll('.day')
+     day.forEach(card=>{
+        createObserver(card);
+     })
 
-    setTimeout(()=> {
-        weatherInfo.classList.remove("animateCurrent");
-        forcast.classList.remove("animateWeekly");
-      },2100);
+    if( weatherInfo.classList.contains("animateCurrent")){
+      weatherInfo.classList.remove("animateCurrent")
+    }else{
+      weatherInfo.classList.add("animateCurrent")
+    }
+     
+ 
 }
 
 
+function createObserver(card) {
+    let observer;
+  
+    let options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.2,
+    };
+  
+    observer = new IntersectionObserver(handleIntersect, options);
+    observer.observe(card);
+  }
+
+
+  function handleIntersect(entries, observer) {
+    entries.forEach((entry) => {
+    
+       if(!entry.isIntersecting){
+           return;
+       }
+       entry.target.classList.add("fade")
+       observer.unobserve(entry.target)
+    });
+  }
+
 /* events */
 
-window.addEventListener("DOMContentLoaded",anination)
+window.addEventListener("DOMContentLoaded",animation)
 window.addEventListener("DOMContentLoaded",()=>{
     getCurrentWeather("benin city")
     geocordinate("benin city")
@@ -165,3 +191,5 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 const searchBtn=document.getElementById("btn");
 searchBtn.addEventListener("click",Locaton.searchCurrentLocation)
+
+
