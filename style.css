@@ -51,21 +51,28 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-     margin: 90px 0px 0px 0px;
-    transform: translateX(-100%);
-    transition:  transform 400ms ease-in;
+     margin-top: 90px;
    }
 
-   .weather-info >*+*{
+   .weather-content> *+*{
       margin-top: 20px;
    }
    /* weather animation */
  
    .animateCurrent{
-   
-     transform: translateX(0%);
+     animation:  from-left 400ms ease-in-out;
    }
    
+   @keyframes from-left{
+    0%{
+      opacity: 0;
+      transform: translateX(-400%);
+    }
+    100%{
+      opacity: 1;
+      transform: translateX(0%);
+    }
+   }
    
      
    .flex-desc >*+*{
@@ -109,7 +116,9 @@ body{
   }
   /*    <!-- weather input --> */
 
-  
+  .weather-input{
+    margin-top: 20px;
+  }
 
   .weather-input input{
    padding: 0.92rem;

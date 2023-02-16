@@ -1,6 +1,6 @@
 const weatherInfo=document.querySelector('.weather-info');
 let forcast= document.querySelector('.forcast');
-
+const weatherContent=document.querySelector('.weather-content')
 // api.openweathermap.org/data/2.5/forecast?q=benin city&appid=appid=2275fe7cb85bec6c223cb33918659ad5&units=imperial
 //get current weather api
 async function getCurrentWeather(location){
@@ -57,7 +57,7 @@ async function geocordinate(location){
 const DOMSTUFF=(function(){
           
      
-          const weatherContent=document.querySelector('.weather-content')
+     
           const createTheWeekElem=(data)=>{
         
             const dayname = new Date(data.dt * 1000).toLocaleDateString("en", {
@@ -106,8 +106,9 @@ const DOMSTUFF=(function(){
   </div>
         `
         
-     weatherContent.innerHTML=output; 
-     animation()
+        weatherContent.innerHTML=output; 
+        currentWeatherAnimation()
+
    }
    
    return{
@@ -144,13 +145,15 @@ function animation(){
         createObserver(card);
      })
 
-    if( weatherInfo.classList.contains("animateCurrent")){
-      weatherInfo.classList.remove("animateCurrent")
-    }else{
-      weatherInfo.classList.add("animateCurrent")
-    }
-     
+}
+
+function currentWeatherAnimation(){
  
+   
+  weatherContent.classList.add("animateCurrent")
+  setTimeout(function(){
+     weatherContent.classList.remove("animateCurrent")
+}, 3000);
 }
 
 
@@ -181,7 +184,7 @@ function createObserver(card) {
 
 /* events */
 
-window.addEventListener("DOMContentLoaded",animation)
+
 window.addEventListener("DOMContentLoaded",()=>{
     getCurrentWeather("benin city")
     geocordinate("benin city")
